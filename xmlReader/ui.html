@@ -1,0 +1,31 @@
+<html>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+<script src="http://ui-grid.info/release/ui-grid-unstable.js"></script>
+<link rel="stylesheet" href="http://ui-grid.info/release/ui-grid-unstable.css" type="text/css">
+<script src="http://cdn.jsdelivr.net/alasql/latest/alasql.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+<body>
+
+<div ng-app="xmlReader" ng-controller="parser">
+
+<input type="file" fileread="fileName" />
+<div class="row">
+<button ng-click="readFile()">Read File</button>
+<button ng-click="upload()">Upload</button>
+</div>
+<div class="row" style="height:300px">
+	                 	 		<div class="grid" ui-grid="excelGrid" ui-grid-selection></div>
+	                 	 	</div>
+
+</div>
+
+
+
+<script src="controller.js"></script>
+</body>
+
+</html>
