@@ -1,4 +1,4 @@
-var app = angular.module('xmlReader', ['ui.bootstrap','ui.grid', 'ui.grid.selection']);
+var app = angular.module('xmlReader', ['ui.grid', 'ui.grid.selection', 'ui.grid.pagination']);
 app.directive("fileread", [function () {
     return {
         scope: {
@@ -13,11 +13,12 @@ app.directive("fileread", [function () {
                     var workbook = XLSX.read(data, {type : 'binary'});
 
                     workbook.SheetNames.forEach(function(sheetName){
-                        // Here is your object
+                       
                         var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
                         var json_object = JSON.stringify(XL_row_object);
                         console.log(json_object);
-						scope.$apply(function () {
+						scope.$apply(function () 
+								{
                         scope.fileread = XL_row_object;
                     });
 
@@ -37,11 +38,9 @@ app.directive("fileread", [function () {
 app.controller('parser', function($scope) {
 	$scope.skipArray =[]; 
 	$scope.excelGrid ={
-			enableRowSelection: true,
-		    enableSelectAll: true,
-		    selectionRowHeaderWidth: 35,
-		    enableGroupHeaderSelection: false,
-		    multiSelect : true,
+			
+		    paginationPageSizes: [25, 50, 75],
+		    paginationPageSize: 25,
 		 columnDefs: [
 		              { name: 'name1',field : 'SNO',displayName : 'SNO' },
 		              { name: 'name2',field : 'NAME',displayName : 'NAME' },
@@ -50,6 +49,7 @@ app.controller('parser', function($scope) {
 		            ],
 		            onRegisterApi: function( gridApi ) {
 		                $scope.excelGridApi = gridApi;
+		                $scope.excelGridApi.grid.gridHeight = 1547; 
 		                gridApi.selection.on.rowSelectionChanged($scope, function(row){ 
 		                	$scope.skipArray.push(row.entity.SNO);
 		                    });
@@ -67,7 +67,14 @@ $scope.upload = function(){
 			uploadArray.push($scope.excelGrid.data[i]);
 		}
 	}
+	console.log(uploadArray[5].ADDRESS);
 	
+	
+	
+};
+
+$scope.DownloadExcel = function(){
+	window.open("http://localhost:8080/AdminPanel/xmlReader/Sample.xls");
 };
 
 
